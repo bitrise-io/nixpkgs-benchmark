@@ -2,7 +2,11 @@ format_version: "11"
 default_step_lib_source: https://github.com/bitrise-io/bitrise-steplib.git
 project_type: other
 workflows:
-  nix-darwin:
+  package-regressions:
+    meta:
+      bitrise.io:
+        stack: osx-xcode-edge
+        machine_type_id: g2.mac.4x-large
     steps:
     - script@1.2.1:
         title: Install Nix
