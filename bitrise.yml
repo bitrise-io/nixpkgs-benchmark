@@ -25,9 +25,9 @@ workflows:
         inputs:
         - content: |
             #!/usr/bin/env bash
-            set -exo pipefail
 
             . /nix/var/nix/profiles/default/etc/profile.d/nix-daemon.sh
+            set -exo pipefail
 
             nix build github:bitrise-io/nixpkgs-benchmark#default \
               --log-format multiline \
@@ -39,9 +39,9 @@ workflows:
         inputs:
         - content: |+
             #!/usr/bin/env bash
-            set -exo pipefail
 
             . /nix/var/nix/profiles/default/etc/profile.d/nix-daemon.sh
+            set -exo pipefail
 
             nix build github:bitrise-io/nixpkgs-benchmark#default \
               --log-format multiline \

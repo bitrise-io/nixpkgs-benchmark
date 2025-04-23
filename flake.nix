@@ -30,10 +30,6 @@
               (final: prev: {
                 pythonPackagesExtensions = prev.pythonPackagesExtensions ++ [
                   (python-final: python-prev: {
-                    mocket = python-prev.mocket.overrideAttrs (mocket-prev: {
-                      # disabledTests = mocket-prev.disabledTests ++ [ "test_httprettish_httpx_session" ];
-
-                    });
                     anyio = python-prev.anyio.overrideAttrs (anyio-prev: {
                       disabledTests = anyio-prev.disabledTests ++ [
                         # These tests become flaky under heavy load
@@ -51,77 +47,57 @@
           };
         in
         {
-          stdenv = pkgs.stdenv;
+          benchmarkSmall = pkgs.clang;
 
-          default = pkgs.buildEnv {
-            name = "regression-pkg-set";
+          benchmarkHuge = pkgs.buildEnv {
+            name = "nixpkgs-benchmark-huge";
             ignoreCollisions = true;
             paths =
               with pkgs;
               [
-                ansible
-                ansible-language-server
-                ansible-lint
                 aria
                 awscli2
-                bash-language-server
                 bazelisk
                 bitrise
-                broot
                 btop
                 bundler
-                cmake
                 curl
                 dart
                 dua
                 fastlane
                 fd
                 firebase-tools
-                flow
                 gh
                 git
                 git-lfs
-                gnupg
                 go
                 go_1_23
                 go_1_24
                 google-cloud-sdk
-                hadolint
-                hugo
                 imagemagick
                 jdk17_headless
                 jq
-                just
                 kotlin
                 lokalise2-cli
                 mercurial
                 openconnect
                 openvpn
-                packer
                 parallel
                 php83
                 pipx
                 pnpm
-                poetry
                 protobuf
                 pyenv
                 pylint
-                python311
-                python312
-                python313
-                qemu
                 rbenv
                 readline
                 screen
                 shellcheck
                 sonar-scanner-cli
-                tailscale
                 tree
-                watchman
                 wget
                 xcpretty
                 yamllint
-                zeromq
                 zstd
               ]
               ++ pkgs.lib.optionals pkgs.stdenv.hostPlatform.isDarwin [
@@ -138,4 +114,3 @@
       );
     };
 }
-
