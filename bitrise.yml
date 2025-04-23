@@ -29,7 +29,7 @@ workflows:
             . /nix/var/nix/profiles/default/etc/profile.d/nix-daemon.sh
             set -exo pipefail
 
-            nix build github:bitrise-io/nixpkgs-benchmark#default \
+            nix build github:bitrise-io/nixpkgs-benchmark#benchmarkSmall \
               --log-format multiline \
               --option max-jobs 0 \
               --fallback \
@@ -43,7 +43,7 @@ workflows:
             . /nix/var/nix/profiles/default/etc/profile.d/nix-daemon.sh
             set -exo pipefail
 
-            nix build github:bitrise-io/nixpkgs-benchmark#default \
+            nix build github:bitrise-io/nixpkgs-benchmark#benchmarkSmall \
               --log-format multiline \
               --option max-jobs 4 \
               --option cores 0 \
