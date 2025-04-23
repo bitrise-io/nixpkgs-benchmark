@@ -1,0 +1,49 @@
+format_version: "11"
+default_step_lib_source: https://github.com/bitrise-io/bitrise-steplib.git
+project_type: other
+workflows:
+  nix-darwin:
+    steps:
+    - script@1.2.1:
+        title: Install Nix
+        inputs:
+        - content: |
+            #!/usr/bin/env bash
+            set -eo pipefail
+
+            export NIX_INSTALLER_NO_CONFIRM=true
+            export NIX_INSTALLER_ENABLE_FLAKES=true
+            curl -sSf -L https://install.lix.systems/lix | sh -s -- install
+
+            echo "access-tokens = github.com=$NIX_GITHUB_TOKEN" | sudo tee -a /etc/nix/nix.conf
+    - script@1.2.1:
+        title: 'Nix build: fetch from cache'
+        inputs:
+        - content: |
+            #!/usr/bin/env bash
+            set -exo pipefail
+
+            . /nix/var/nix/profiles/default/etc/profile.d/nix-daemon.sh
+
+            nix build github:bitrise-io/nixpkgs-benchmark#default \
+              --log-format multiline \
+              --option max-jobs 0 \
+              --fallback \
+              --keep-going || true
+    - script@1.2.1:
+        title: 'Nix build: build remaining stuff'
+        inputs:
+        - content: |+
+            #!/usr/bin/env bash
+            set -exo pipefail
+
+            . /nix/var/nix/profiles/default/etc/profile.d/nix-daemon.sh
+
+            nix build github:bitrise-io/nixpkgs-benchmark#default \
+              --log-format multiline \
+              --option max-jobs 4 \
+              --option cores 0 \
+              --option log-lines 1000 \
+              --fallback \
+              --keep-going
+
