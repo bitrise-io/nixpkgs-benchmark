@@ -49,5 +49,6 @@ workflows:
               --option cores 0 \
               --option log-lines 1000 \
               --fallback \
+              --rebuild \
               --keep-going
 
