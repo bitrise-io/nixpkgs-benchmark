@@ -47,7 +47,7 @@
           };
         in
         {
-          benchmarkSmall = pkgs.clang;
+          benchmarkSmall = pkgs.llvm;
 
           benchmarkHuge = pkgs.buildEnv {
             name = "nixpkgs-benchmark-huge";
